@@ -1,0 +1,90 @@
+<html>
+	<head>
+		<title>Microscope | Performance profile visualizer</title>
+		<link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+		<style>
+			:root {
+				--bg-color: white;
+				--text-color: #222;
+			}
+
+			@media (prefers-color-scheme:dark) {
+				:root {
+					--bg-color: rgb(35, 35, 35);
+					--text-color: white;
+				}
+			}
+
+			html,body {
+				height: 100%;
+				width: 100%;
+				margin: 0;
+				background-color: var(--bg-color);
+				color: var(--text-color);
+				font-family: Roboto, sans-serif;
+			}
+
+			.profile-display {
+				height: 100%;
+				display: grid;
+				grid-template-rows: auto 1fr;
+				grid-template-columns: auto auto auto;
+			}
+
+			.section {
+				width: 400px;
+				border: 1px solid gray;
+				overflow-y: scroll;
+			}
+			.section__title {
+				font-weight: bold;
+			}
+			.section--summary {
+				justify-self: flex-end;
+			}
+			.file-drop-cover {
+				position: fixed;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				background: rgba(0, 0, 0, .6);
+				backdrop-filter: blur(5px);
+				pointer-events: none;
+			}
+			.section--callstack {
+				grid-row: 2;
+    			grid-column: 1;
+			}
+			.section--summary {
+				grid-row: 2;
+    			grid-column: 3;
+			}
+			.treeview__node > .treeview__node {
+				margin-left: 8px;
+			}
+			.treeview__nodetitle {
+				cursor: pointer;
+				user-select: none;
+			}
+			.treeview__nodetitle__timeinfo {
+				color: #888888;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="profile-display">
+			<input type="file" id="profile-upload-input">
+			<div class="section section--callstack">
+				<p class="section__title">Call stack</p>
+				<div class="section__content"></div>				
+			</div>
+			<div class="section section--summary">
+				<p class="section__title">Summaries</p>
+				<div class="section__content"></div>
+			</div>
+		</div>
+		<script src="app.js" type="module"></script>
+	</body>
+</html>
