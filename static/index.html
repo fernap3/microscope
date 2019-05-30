@@ -28,20 +28,20 @@
 			.profile-display {
 				height: 100%;
 				display: grid;
-				grid-template-rows: auto 1fr;
+				grid-template-rows: 100px auto 1fr;
 				grid-template-columns: auto auto auto;
 			}
 
 			.section {
-				width: 400px;
 				border: 1px solid gray;
-				overflow-y: scroll;
 			}
 			.section__title {
 				font-weight: bold;
 			}
 			.section--summary {
+				width: 400px;
 				justify-self: flex-end;
+				overflow-y: scroll;
 			}
 			.file-drop-cover {
 				position: fixed;
@@ -53,12 +53,24 @@
 				backdrop-filter: blur(5px);
 				pointer-events: none;
 			}
-			.section--callstack {
+			#profile-upload-input {
+				grid-column: 1;
 				grid-row: 2;
+			}
+			.section--timeline {
+				grid-row: 1;
+    			grid-column: 1 / span 3;
+				position: relative;
+				overflow-y: scroll;
+			}
+			.section--callstack {
+				width: 400px;
+				grid-row: 3;
     			grid-column: 1;
+				overflow-y: scroll;
 			}
 			.section--summary {
-				grid-row: 2;
+				grid-row: 3;
     			grid-column: 3;
 			}
 			.treeview__node > .treeview__node {
@@ -106,11 +118,25 @@
 			.summary__item--warm {
 				color: orangered;
 			}
+			.timestamp__entry {
+				border: 1px solid rgba(0, 0, 0, .8);
+				font-size: 12px;
+				font-weight: bold;
+				border-radius: 3px;
+				display: flex;
+				align-items: center;
+				height: 20px;
+				position: absolute;
+				overflow: hidden;
+			}
 		</style>
 	</head>
 	<body>
 		<div class="profile-display">
 			<input type="file" id="profile-upload-input">
+			<div class="section section--timeline">
+				<div class="section__content"></div>				
+			</div>
 			<div class="section section--callstack">
 				<p class="section__title">Call stack</p>
 				<div class="section__content"></div>				

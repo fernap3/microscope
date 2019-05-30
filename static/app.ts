@@ -2,6 +2,7 @@ import { PerfEntry, PerfEntryTreeNode, PerfEntryEnter, PerfEntryExit } from "./p
 import { TreeView } from "./tree-view.js";
 import * as idb from "./idb-keyval.js";
 import { SummaryView } from "./summary-view.js";
+import { TimelineView } from "./timeline-view.js";
 
 export class App
 {
@@ -114,8 +115,8 @@ export class App
 		console.log(`Created call tree`, perfTree);
 
 		new TreeView(perfTree).render(document.querySelector(".section--callstack .section__content")! as HTMLElement);
-
 		new SummaryView(entries).render(document.querySelector(".section--summary .section__content")! as HTMLElement);
+		// new TimelineView(entries).render(document.querySelector(".section--timeline .section__content")! as HTMLElement);
 	}
 
 	private buildTreeFromEntries(entries: PerfEntry[], level = 1): PerfEntryTreeNode[]
@@ -130,7 +131,7 @@ export class App
 				// record with timing information later.
 				if (!entry.ParentId)
 				{
-					tree.push({ entry, children: [] });
+					tree.push({ entry: {...entry}, children: [] });
 				}
 				else
 				{
@@ -144,7 +145,7 @@ export class App
 					}
 					else
 					{
-						node.children.push({ entry, children: [] });
+						node.children.push({ entry: {...entry}, children: [] });
 					}
 				}
 			}

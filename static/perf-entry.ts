@@ -3,6 +3,7 @@ export interface PerfEntry
 	Id: string;
 	ParentId: string
 	Type: "Enter" | "Exit";
+	TimeStamp: string;
 	CompanyId: string;
 	UserId: string;
 	SessionId: string;
