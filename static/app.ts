@@ -92,17 +92,17 @@ export class App
 	{
 		let entries = this.loadEntriesFromJson(profileText);
 
-		if(new Set(entries.map(e => e.SessionId)).size > 1)
-		{
-			console.log("Only one session ID is supported currently; picking the entries from the last session ID in the logs");
-			entries = entries.filter(e => e.SessionId === entries[entries.length - 1].SessionId);
-		}
+		// if(new Set(entries.map(e => e.SessionId)).size > 1)
+		// {
+		// 	console.log("Only one session ID is supported currently; picking the entries from the last session ID in the logs");
+		// 	entries = entries.filter(e => e.SessionId === entries[entries.length - 1].SessionId);
+		// }
 
-		if(new Set(entries.map(e => e.SessionNum)).size > 1)
-		{
-			console.log("Only one session num is supported currently; picking the entries from the last session num in the logs");
-			entries = entries.filter(e => e.SessionNum === entries[entries.length - 1].SessionNum);
-		}
+		// if(new Set(entries.map(e => e.SessionNum)).size > 1)
+		// {
+		// 	console.log("Only one session num is supported currently; picking the entries from the last session num in the logs");
+		// 	entries = entries.filter(e => e.SessionNum === entries[entries.length - 1].SessionNum);
+		// }
 
 		// We only care about Exit nodes for this tree because they have the timing information
 		//entries = entries.filter(e => e.Type === "Exit");
