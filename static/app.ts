@@ -1,4 +1,4 @@
-import { PerfEntry, PerfEntryTreeNode } from "./perf-entry.js";
+import { PerfEntry, PerfEntryTreeNode, PerfEntryEnter, PerfEntryExit } from "./perf-entry.js";
 import { TreeView } from "./entry-tree.js";
 import * as idb from "./idb-keyval.js";
 
@@ -113,6 +113,21 @@ export class App
 		console.log(`Created call tree`, perfTree);
 
 		new TreeView(perfTree).render(document.querySelector(".section--callstack .section__content")! as HTMLElement);
+
+		// Show summaries per entry name
+		const totals: {[name: string]: number} = {};
+		for (let entry of entries)
+			totals[entry.Name] = (totals[entry.Name] || 0) + (entry as PerfEntryExit).Stopwatch;
+
+		const summarySection = document.querySelector(".section--summary .section__content") as HTMLElement;
+		for (let [name, time] of Object.entries(totals).slice().sort((a,b) => a[1] > b[1] ? -1 : a[1] < b[1] ? 1 : 0))
+		{
+			const box = document.createElement("div");
+			box.className = "summary__item";
+			summarySection.appendChild(box);
+			box.innerHTML = `${name}:<br>${new Intl.NumberFormat("en-US").format(time)}ms`;
+		}
+
 	}
 
 	private buildTreeFromEntries(entries: PerfEntry[], level = 1): PerfEntryTreeNode[]
