@@ -4,7 +4,8 @@
   "description": "",
   "main": "PerfEntry.js",
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+	"start": "node main.js",
+	"build": "tsc -p tsconfig.json"
   },
   "repository": {
     "type": "git",
@@ -12,6 +13,17 @@
   },
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "@types/compression": "0.0.36",
+    "@types/dotenv": "^6.1.0",
+    "@types/express": "^4.16.0",
+    "body-parser": "^1.18.3",
+    "compression": "^1.7.3",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "get-random-values": "^1.2.0",
+    "typescript": "^3.3.1"
+  },
   "bugs": {
     "url": "https://github.com/fernap3/microscope/issues"
   },
