@@ -39,7 +39,7 @@ app.use(bodyParser.text());
 
 // app.get("/service-worker.js", (req, res, next) => res.sendFile(path.resolve("src/webclient/service-worker.js")));
 
-app.use("/", express.static("/"));
+app.use("/", express.static("static"));
 
 // Start the webserver
 app.listen(process.env.PORT || 8080, () => {

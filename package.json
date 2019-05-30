@@ -5,7 +5,7 @@
   "main": "PerfEntry.js",
   "scripts": {
 	"start": "node main.js",
-	"build": "tsc -p tsconfig.json"
+	"build": "tsc -b tsconfig.json"
   },
   "repository": {
     "type": "git",

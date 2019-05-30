@@ -4,9 +4,14 @@
 		"target": "esnext",
 		"strictNullChecks": true,
 		"noImplicitAny": true,
-		"noImplicitReturns": true
+		"noImplicitReturns": true,
+		"declaration": true,
+		"declarationMap": true
 	},
-	"exclude": [
-		"node_modules"
+	"include": [
+		"*.ts"
+	],
+	"references": [
+		{"path": "static/"}
 	]
 }
