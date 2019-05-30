@@ -3,3 +3,4 @@
 *.d.ts.map
 node_modules/
 **/*.tsbuildinfo
+.env

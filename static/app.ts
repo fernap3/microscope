@@ -104,6 +104,9 @@ export class App
 			entries = entries.filter(e => e.SessionNum === entries[entries.length - 1].SessionNum);
 		}
 
+		// We only care about Exit nodes for this tree because they have the timing information
+		//entries = entries.filter(e => e.Type === "Exit");
+
 		const perfTree = this.buildTreeFromEntries(entries);
 
 		console.log(`Parsed entries`, entries);
@@ -115,27 +118,47 @@ export class App
 	private buildTreeFromEntries(entries: PerfEntry[], level = 1): PerfEntryTreeNode[]
 	{
 		const tree = [] as PerfEntryTreeNode[];
-		const topLevelNodes = entries.filter(e => e.Depth === level);
 		
 		for (let entry of entries)
 		{
-			if (!entry.ParentId)
+			if (entry.Type === "Enter")
 			{
-				tree.push({ entry, children: [] });
-			}
-			else
-			{
-				const node = this.findNodeById(tree, entry.ParentId);
-
-				if (!node)
+				// We have found an Enter record.  Create a tree node.  We should encounter an Exit
+				// record with timing information later.
+				if (!entry.ParentId)
 				{
-					// Currently, this algorithm relies on parent entries always showing up in the log before
-					// their children.
-					console.log(`Skipping ${JSON.stringify(entry)} because it was either logged before its parent, or refers to a nonexistent parent.`);
+					tree.push({ entry, children: [] });
 				}
 				else
 				{
-					node.children.push({ entry, children: [] });
+					const node = this.findNodeById(tree, entry.ParentId);
+
+					if (!node)
+					{
+						// Currently, this algorithm relies on parent entries always showing up in the log before
+						// their children.
+						console.warn(`Skipping "Enter" record because it was either logged before its parent, or refers to a nonexistent parent: ${JSON.stringify(entry)}`);
+					}
+					else
+					{
+						node.children.push({ entry, children: [] });
+					}
+				}
+			}
+			else
+			{
+				// We have found an Exit record.  Look up the corresponding node in the tree
+				// and add the timing information.
+				const node = this.findNodeById(tree, entry.Id);
+				if (!node)
+				{
+					console.warn(`Skipping "Exit" record because it was logged without a corresponding "Enter" record: ${JSON.stringify(entry)}`);
+				}
+				else
+				{
+					// Just straight copy the Exit node over the existing tree node.  Now that the tree is build,
+					// nodes don't distinguish between entry and exit.
+					Object.assign(node.entry, entry);
 				}
 			}
 		}

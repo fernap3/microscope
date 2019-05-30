@@ -4,8 +4,8 @@
   "description": "",
   "main": "PerfEntry.js",
   "scripts": {
-	"start": "node main.js",
-	"build": "tsc -b tsconfig.json"
+    "start": "node main.js",
+    "build": "tsc -b tsconfig.json"
   },
   "repository": {
     "type": "git",

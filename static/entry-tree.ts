@@ -6,10 +6,10 @@ export class TreeView
 	
 	constructor(tree: PerfEntryTreeNode[])
 	{
-		// We only care about Exit nodes for this tree because they have the timing information
-		this.tree = tree.filter(n => n.entry.Type === "Exit") as any;
-		this.forEachTreeNode(node => node.open = true);
-		console.log(this.tree)
+		this.tree = tree as any;
+		
+		// Default all tree nodes to "closed"
+		this.forEachTreeNode(node => node.open = false);
 	}
 
 	public render(container: HTMLElement): void
