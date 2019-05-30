@@ -25,10 +25,10 @@ export class TreeView
 	private renderSubtree(root: TreeViewNode, container: HTMLElement): void
 	{
 		const nodeBox = document.createElement("div");
-		nodeBox.className = "treeview__node";
+		nodeBox.className = `treeview__node${root.children.length?" treeview__node--folder":""}${root.children.length&&root.open?" treeview__node--open":""}`;
 		nodeBox.setAttribute("data-id", root.entry.Id);
 
-		const timeinfo = `${root.entry.Stopwatch}ms`;
+		const timeinfo = `${new Intl.NumberFormat("en-US").format(root.entry.Stopwatch)}ms`;
 
 		nodeBox.innerHTML = `
 			<div class="treeview__nodetitle">
@@ -39,15 +39,15 @@ export class TreeView
 
 		container.appendChild(nodeBox);
 
-		this.renderChildren(root, nodeBox);
+		if (root.open)
+			this.renderChildren(root, nodeBox);
 	}
 
 	private renderChildren(root: TreeViewNode, rootContainer: HTMLElement): void
 	{
 		for (let node of root.children)
 		{
-			if (node.open)
-				this.renderSubtree(node, rootContainer);
+			this.renderSubtree(node, rootContainer);
 		}
 	}
 
@@ -87,12 +87,14 @@ export class TreeView
 		if (dataNode.open)
 		{
 			// The node is open; close it
+			node.classList.remove("treeview__node--folder--open");
 			for (let child of [...node.querySelectorAll(".treeview__node")])
 				child.remove();
 		}
 		else
 		{
 			// The node is closed; open it
+			node.classList.add("treeview__node--folder--open");
 			this.renderChildren(dataNode, node);
 		}
 
