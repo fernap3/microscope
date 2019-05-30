@@ -1,0 +1,19 @@
+{
+  "name": "microscope",
+  "version": "1.0.0",
+  "description": "",
+  "main": "PerfEntry.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fernap3/microscope.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fernap3/microscope/issues"
+  },
+  "homepage": "https://github.com/fernap3/microscope#readme"
+}
